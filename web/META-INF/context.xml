@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context >
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <Resource
+    name="java_work_two"
+    type="javax.sql.DataSource"
+    maxActive="3"
+    maxIdle="1"
+    maxWait="1000"
+    url="jdbc:mysql://localhost:3306/java_work_two"
+    driverClassName="com.mysql.cj.jdbc.Driver"
+    username="root" password="wljsl+2240"
+    />
+</Context>
