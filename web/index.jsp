@@ -8,10 +8,10 @@
     //存在message则说明用户已登录
     if (message == null){
         message = new Message();
-        session.setAttribute("msg",message);
-        msg = "<a href=\"login.jsp\">登录</a>\uD83C\uDF32<a href=\"register.jsp\">注册</a>\n";
+        //session.setAttribute("msg",message);
+        msg = "<a href=\"user/login.jsp\"><img src='pic/person.png' width='25' height='24' style='margin-bottom: -5px'>登录</a>\uD83C\uDF32<a href=\"user/register.jsp\">注册</a>\n";
     }else {
-        msg = "<a href=\"user_info.jsp\">"+message.getUserName()+"</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
+        msg = "<a href=''>录入图书</a> <a href=''>删除图书</a> <a href=\"user/user_info.jsp\"><img src='pic/person.png' width='25' height='24' style='margin-bottom: -5px'>"+message.getUserName()+"</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
     }
 %>
 <html>
@@ -44,6 +44,8 @@
             }
         }
         function search() {
+            let text = document.getElementById("search-box").value
+            if (text.match(/^[ ]+$/))return//all space
             document.getElementById("search-form").submit()
         }
     </script>
@@ -51,19 +53,19 @@
 <body>
 <form id="form" action="${pageContext.request.contextPath}/Logout" method="get"></form>
 <div style="text-align: right;margin-right: 10px">
-    <img src="pic/person.png" width="25" height="24" style="margin-bottom: -5px">
     <%=msg%>
 </div>
 <form id="search-form" method="post" action="Search">
     <input name="id" style="visibility: hidden" value="<%=message.getID()%>">
     <br>
-    <input placeholder="搜索书名/作者" name="search-text" class="search-box" type="text" value="<%=searchText%>" id="search-box" onkeypress="keyPress(event)">
+    <input placeholder="搜索书名/作者" name="search-text" id="search-box" class="search-box" type="text" value="<%=searchText%>" id="search-box" onkeypress="keyPress(event)">
     <input name="page" value="1" style="visibility: hidden"/>
     <input name="count" value="20" style="visibility: hidden"/>
 </form>
 <br>
 <div align="center">
-    <%=message.getNewMessage()%>
+    <jsp:include page="book/book_search_result.jsp"></jsp:include>
+<%--    <%=message.getNewMessage()%>--%>
 </div>
 </body>
 </html>

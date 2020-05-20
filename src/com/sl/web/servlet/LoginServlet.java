@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
             if (response.isNotFound()){
                 message.setUserName(bean.getUserName());
                 message.setNewMessage("用户不存在");
-                resp.sendRedirect("login.jsp");
+                resp.sendRedirect("user/login.jsp");
             }else {
                 message.setID(bean.getID());
                 message.setUserName(bean.getUserName());
@@ -45,7 +45,8 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect("index.jsp");
             }
         }else{//执行失败
-            resp.getWriter().write("登录失败,疑似服务器故障\\n"+response.getMsg()+"<script>alert(\"系统原因导致登录失败!\\n请重试\\n"+response.getMsg()+"\") window.location=\"login.jsp\"</script>");
+            resp.setHeader("refresh","3;user/login.jsp");
+            resp.getWriter().write("登录失败,疑似服务器故障,两秒后跳转至登录页面,或者<a href='user/login.jsp'>点我直接跳转</a>");
         }
     }
 }

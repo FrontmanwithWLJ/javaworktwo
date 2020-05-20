@@ -22,7 +22,6 @@ public class UpdateInfoServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String newPassword = req.getParameter("new-password");
-        UserDao dao = new UserDao();
         HttpSession session = req.getSession();
         Message message = (Message) session.getAttribute("msg");
         if (message == null){
@@ -31,19 +30,20 @@ public class UpdateInfoServlet extends HttpServlet {
         }
         UserService userService = new UserService();
         SqlResponse response = userService.update(id,username,password,newPassword);
+        userService.close();
         if (response.isSuccess()){
             if (response.isNotFound()){
                 message.setNewMessage("用户不存在");
-                resp.sendRedirect("user_info.jsp");
+                resp.sendRedirect("user/user_info.jsp");
                 return;
             }
             message.setUserName(username);
             message.setNewMessage("修改成功，请重新登录");
             message.setID(id);
-            resp.sendRedirect("login.jsp");
+            resp.sendRedirect("user/login.jsp");
         }else {
             message.setNewMessage("出现错误："+response.getMsg());
-            resp.sendRedirect("user_info.jsp");
+            resp.sendRedirect("user/user_info.jsp");
         }
     }
 }

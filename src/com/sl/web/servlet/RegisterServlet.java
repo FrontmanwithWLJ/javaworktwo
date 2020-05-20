@@ -31,15 +31,15 @@ public class RegisterServlet extends HttpServlet {
         }
         if (response.isFailure()){
             message.setNewMessage("注册失败，请重试:"+response.getMsg());
-            req.getRequestDispatcher("register.jsp").forward(req,resp);
+            req.getRequestDispatcher("user/register.jsp").forward(req,resp);
         }else {
             if (!response.isAlwaysExists()) {
                 message.setUserName(username);
                 message.setNewMessage("注册成功");
-                req.getRequestDispatcher("login.jsp").forward(req, resp);
+                req.getRequestDispatcher("user/login.jsp").forward(req, resp);
             }else {
                 message.setNewMessage("用户已存在");
-                req.getRequestDispatcher("register.jsp").forward(req,resp);
+                req.getRequestDispatcher("user/register.jsp").forward(req,resp);
             }
         }
     }

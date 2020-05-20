@@ -1,4 +1,3 @@
-<%@ page import="com.sl.web.bean.UserBean" %>
 <%@ page import="com.sl.web.bean.Message" %><%--
   Created by IntelliJ IDEA.
   User: frontman
@@ -9,10 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Message message = (Message) session.getAttribute("msg");
-    //用户未登录
-    if (message == null || message.getID() < 0 || "".equals(message.getUserName())){
-        response.sendRedirect("login.jsp");//跳转登录
-    }
 %>
 <html>
 <head>
@@ -21,6 +16,7 @@
     <script type="text/javascript">
         function doSubmit() {
             if (checkOldPassword()&&checkDoublePassword()){
+                //alert(checkOldPassword()&&checkDoublePassword())
                 document.getElementById("form").submit();
             }
         }
@@ -37,18 +33,16 @@
             const password = document.getElementById("new-password").value;
             const tmp = document.getElementById("confirm-new-password").value;
             if (password === ""){
-                document.getElementById("mmsg").innerText = "密码不能为空"
+                document.getElementById("new-password-msg").innerText = "密码不能为空"
                 return false
             }
             if (password !== tmp){
-                if (tmp !== "")
-                    document.getElementById("mmsg").innerText = "两次输入的密码不一致"
+                document.getElementById("mmsg").innerText = "两次输入的密码不一致"
                 return false
             }
             document.getElementById("mmsg").innerText = ""
             return true
         }
-
     </script>
 </head>
 <body>
@@ -58,7 +52,7 @@
     <br>
 
     <h3 align="center">修改密码</h3>
-    <form id="form" style="text-align: center" action="UpdateInfo" method="post">
+    <form id="form" style="text-align: center" action="${pageContext.request.contextPath}/UpdateInfo" method="post">
         <table align="center">
             <tr style="visibility: hidden">
                 <td>
@@ -94,12 +88,9 @@
         <br>
         <br>
         <br>
-        <button id="btn" style="color:#BC8F8F" onclick="doSubmit()">修改密码</button>
+        <button id="btn" type="button" style="color:#BC8F8F" onclick="doSubmit()">修改密码</button>
     </form>
 <br>
-<br>
-<br>
-    <label><%=message.getNewMessage()%></label>
 <br>
 </body>
 </html>

@@ -62,7 +62,7 @@
             return true
         }
     }
-    function doSubmit() {
+    function doPost() {
         if (checkName()&&checkPassword()&&checkPhoneNumber()){
             document.getElementById("form").submit();
         }else {
@@ -71,7 +71,7 @@
     }
 </script>
 <h1 align="center">欢迎注册我的图书管理系统</h1>
-<form id="form" style="text-align: center" action="Register" method="post">
+<form id="form" style="text-align: center" action="${pageContext.request.contextPath}/Register" method="post">
     <table align="center" border="0">
         <tr>
             <td><label style="color: red">*</label>账号：</td>
@@ -105,7 +105,7 @@
     <br>
     <br>
     <br>
-    <button id="registerbtn" style="color:#BC8F8F" onclick="doSubmit()">注册</button>
+    <button id="registerbtn" type="button" style="color:#BC8F8F" onclick="doPost()">注册</button>
 </form>
 <br>
 <div align="center">
