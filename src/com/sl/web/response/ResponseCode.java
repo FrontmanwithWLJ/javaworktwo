@@ -15,4 +15,6 @@ public interface ResponseCode {
     int SQLERROR = 32;
     /**未知错误*/
     int UNKNOWNERROR = 64;
+    /**name exists*/
+    int NAMEEXISTS = 256;
 }

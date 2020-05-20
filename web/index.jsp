@@ -58,6 +58,8 @@
     <input name="id" style="visibility: hidden" value="<%=message.getID()%>">
     <br>
     <input placeholder="搜索书名/作者" name="search-text" class="search-box" type="text" value="<%=searchText%>" id="search-box" onkeypress="keyPress(event)">
+    <input name="page" value="1" style="visibility: hidden"/>
+    <input name="count" value="20" style="visibility: hidden"/>
 </form>
 <br>
 <div align="center">

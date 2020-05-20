@@ -19,8 +19,9 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String phoneNumber = req.getParameter("phone-number");
         UserService userService = new UserService();
-        SqlResponse response = userService.register(username,password);
+        SqlResponse response = userService.register(username,password,phoneNumber);
         //获取会话，传递信息
         HttpSession session = req.getSession();
         Message message = (Message) session.getAttribute("msg");

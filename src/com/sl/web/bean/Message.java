@@ -3,6 +3,7 @@ package com.sl.web.bean;
 public class Message extends BaseBean {
     private String userName = "";
     private String newMessage = "";
+    private String phoneNumber = "";
     public Message(){
         this(-1,"","");
     }
@@ -26,5 +27,13 @@ public class Message extends BaseBean {
 
     public void setNewMessage(String newMessage) {
         this.newMessage = newMessage;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

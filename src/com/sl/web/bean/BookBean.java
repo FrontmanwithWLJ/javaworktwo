@@ -1,25 +1,29 @@
 package com.sl.web.bean;
 
+import java.sql.Date;
+
 public class BookBean extends BaseBean {
     //作者id
     private String authorName;
     //出版商
     private String publisherName;
-    //publish date
-    private String date;
     //书名
     private String bookName;
     //价格
     private float price;
+    //publish date
+    private Date date;
     public BookBean(){
-        this(0,"","","",0f);
+        this(0,"","","",0f,null);
     }
-    public BookBean(int id,String authorName,String publisherName,String bookName,float price){
+    public BookBean(int id,String bookName,String authorName,
+                    String publisherName,float price,Date date){
         setID(id);
         setAuthorName(authorName);
         setPublisherName(publisherName);
         setBookName(bookName);
         setPrice(price);
+        setDate(date);
     }
 
     public String getAuthorName() {
@@ -54,11 +58,11 @@ public class BookBean extends BaseBean {
         this.price = price;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

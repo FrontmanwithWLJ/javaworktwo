@@ -1,5 +1,7 @@
 package com.sl.web.bean;
 
+import com.sl.web.response.SqlResponse;
+
 import java.util.ArrayList;
 
 public class SearchResult<T> {
@@ -9,6 +11,8 @@ public class SearchResult<T> {
     private int count;
     //最后要吧结果全部列出来，不需要随机访问
     private ArrayList<T> list;
+
+    private SqlResponse response;
 
     public SearchResult(){
         this(0,0,null);

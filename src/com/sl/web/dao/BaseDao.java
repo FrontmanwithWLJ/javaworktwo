@@ -18,6 +18,8 @@ public abstract class BaseDao<T> {
     public static final int SQLNOCONNECTED = -1;
     /**数据库错误*/
     public static final int SQLERROR = -2;
+    /**name exists*/
+    public static final int NAMEEXISTS = -3;
 
     Statement statement = null;
     DruidPooledConnection connection = null;

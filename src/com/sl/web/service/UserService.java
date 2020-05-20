@@ -12,7 +12,7 @@ public class UserService {
 
     /**
      *
-     * @param bean 传入的bean不需要id，会在登录成功后自动写入
+     * @param bean 传入的bean不需要id，会在登录成功后自动写入 ,phoneNumber yet
      * @return
      */
     public SqlResponse login(UserBean bean){
@@ -20,8 +20,8 @@ public class UserService {
         return buildResponse(result,1);
     }
 
-    public SqlResponse register(String username,String password){
-        int result = userDao.insert(new UserBean(username,password));
+    public SqlResponse register(String username,String password,String phoneNumber){
+        int result = userDao.insert(new UserBean(username,password,phoneNumber));
         return buildResponse(result,-1);
     }
 

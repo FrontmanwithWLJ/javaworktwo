@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
                 message.setID(bean.getID());
                 message.setUserName(bean.getUserName());
                 message.setNewMessage("登录成功");
+                message.setPhoneNumber(bean.getPhoneNumber());
                 req.getSession().setAttribute("msg",message);
                 resp.sendRedirect("index.jsp");
             }
@@ -47,6 +48,4 @@ public class LoginServlet extends HttpServlet {
             resp.getWriter().write("登录失败,疑似服务器故障\\n"+response.getMsg()+"<script>alert(\"系统原因导致登录失败!\\n请重试\\n"+response.getMsg()+"\") window.location=\"login.jsp\"</script>");
         }
     }
-
-
 }

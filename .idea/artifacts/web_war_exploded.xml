@@ -10,6 +10,7 @@
           <element id="library" level="project" name="druid-1.1.21" />
           <element id="file-copy" path="$PROJECT_DIR$/out/artifacts/web_war_exploded/druid-1.1.21.jar" />
           <element id="file-copy" path="$USER_HOME$/下载/mysql-connector-java-8.0.19.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/mysql-connector-java-8.0.19.jar" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="javaworktwo/web/Web" />

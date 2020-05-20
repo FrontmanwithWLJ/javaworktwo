@@ -18,10 +18,12 @@ public class SqlResponse {
      * 描述执行结果
      */
     private String msg;
-    public SqlResponse(){
-        this(-1,0,"");
+
+    public SqlResponse() {
+        this(-1, 0, "");
     }
-    public SqlResponse(int count,int code,String msg){
+
+    public SqlResponse(int count, int code, String msg) {
         setCount(count);
         setCode(code);
         setMsg(msg);
@@ -51,76 +53,82 @@ public class SqlResponse {
         this.msg = msg;
     }
 
-    public Boolean isSuccess(){
+    public Boolean isSuccess() {
         return getState(ResponseCode.SUCCESS);
     }
 
-    public Boolean isFailure(){
+    public Boolean isFailure() {
         return getState(ResponseCode.FAILURE);
     }
 
-    public Boolean isNotFound(){
+    public Boolean isNotFound() {
         return getState(ResponseCode.NOTFOUND);
     }
 
-    public Boolean isAlwaysExists(){
+    public Boolean isAlwaysExists() {
         return getState(ResponseCode.ALWAYSEXISTS);
     }
 
-    public Boolean isSqlError(){
+    public Boolean isSqlError() {
         return getState(ResponseCode.SQLERROR);
     }
 
-    public Boolean isSqlNoConnected(){
+    public Boolean isSqlNoConnected() {
         return getState(ResponseCode.SQLNOCONNECTED);
     }
 
-    public Boolean isUnKnownError(){
+    public Boolean isUnKnownError() {
         return getState(ResponseCode.UNKNOWNERROR);
     }
 
-    private Boolean getState(int state){
-        return (code&state)==state;
+    private Boolean getState(int state) {
+        return (code & state) == state;
     }
 
     /**
      * 快速生成SqlResponse
+     *
      * @param result sql语句执行完毕dao层返回的操作数据的行数
-     * @param type 操作类型:当result为0时，显示什么类型的错误
-     *             1-> 查询、更新操作，if result==0 NotFoundError
-     *             2-> 插入操作,if result==0 AlwaysExistsError
+     * @param type   操作类型:当result为0时，显示什么类型的错误
+     *               1-> 查询、更新操作，if result==0 NotFoundError
+     *               2-> 插入操作,if result==0 AlwaysExistsError
      * @return
      */
-    public static SqlResponse buildResponse(int result,int type){
+    public static SqlResponse buildResponse(int result, int type) {
         int code = 0;
         String msg = "";
-        switch (result){
+        switch (result) {
             case BaseDao.SQLERROR:
-                code|=ResponseCode.SQLERROR;
+                code |= ResponseCode.SQLERROR;
                 msg = "数据库出错";
                 break;
             case BaseDao.SQLNOCONNECTED:
-                code|=ResponseCode.SQLNOCONNECTED;
+                code |= ResponseCode.SQLNOCONNECTED;
                 msg = "数据库未连接";
                 break;
+            case BaseDao.NAMEEXISTS:
+                code |= ResponseCode.NAMEEXISTS;
+                msg = "name exists";
+                break;
             case 0:
-                if (type == 1){
-                    code|=ResponseCode.NOTFOUND;
+                if (type == 1) {
+                    code |= ResponseCode.NOTFOUND;
                     msg = "未发现";
-                }else {
+                } else {
                     code |= ResponseCode.ALWAYSEXISTS;
                     msg = "数据已存在";
                 }
                 break;
-            default:break;
+            default:
+                break;
         }
-        if (result>=0){
-            code|=ResponseCode.SUCCESS;
-            msg = "执行完毕 " +msg;
-        }else {
-            code|=ResponseCode.FAILURE;
-            msg = "执行出错 " +msg;
+        if (result >= 0) {
+            code |= ResponseCode.SUCCESS;
+            msg = "执行完毕 " + msg;
+        } else {
+            code |= ResponseCode.FAILURE;
+            msg = "执行出错 " + msg;
         }
-        return new SqlResponse(result,code,msg);
+        return new SqlResponse(result, code, msg);
     }
 }

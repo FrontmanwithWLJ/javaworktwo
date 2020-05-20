@@ -8,11 +8,10 @@ import java.sql.*;
 public class UserDao extends BaseDao<UserBean> {
 
     /**
-     * @param statement
      * @param username
-     * @return 
+     * @return true : name is exists
      */
-    private boolean checkName(Statement statement,String username){
+    private boolean checkName(String username){
         try {
             ResultSet resultSet = statement.executeQuery("select username into userinfo where username='"+username+"'");
             resultSet.last();
@@ -29,7 +28,15 @@ public class UserDao extends BaseDao<UserBean> {
         int count = SQLNOCONNECTED;
         if (statement == null)return count;
         try {
-            count = statement.executeUpdate("insert into userinfo (userid, username, password) values(0,\"" + userBean.getUserName() + "\",\"" + userBean.getPassword() + "\")");
+            if (!checkName(userBean.getUserName())) {
+                count = statement.executeUpdate("" +
+                        "insert into userinfo (userid, username, password,phonenumber) " +
+                        "values(0,'" + userBean.getUserName() + "','"
+                        + userBean.getPassword() + "'" +
+                        ",'"+userBean.getPhoneNumber()+"')");
+            }else {
+                count = NAMEEXISTS;
+            }
         } catch (SQLException t) {
             t.printStackTrace();
             count = SQLERROR;
@@ -69,6 +76,7 @@ public class UserDao extends BaseDao<UserBean> {
             if (count == 1) {//找到数据将唯一识别吗写到bean中
                 //第一列就是唯一识别码
                 bean.setID(resultSet.getInt(1));
+                bean.setPhoneNumber(resultSet.getString(4));
             }
         } catch (SQLException t) {
             t.printStackTrace();
@@ -101,6 +109,4 @@ public class UserDao extends BaseDao<UserBean> {
     public int delete(UserBean bean) {
         return 0;
     }
-
-
 }

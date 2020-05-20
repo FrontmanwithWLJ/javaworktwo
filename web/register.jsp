@@ -51,8 +51,19 @@
         //document.getElementById("registerbtn").removeAttribute("disable");//设置不可点击
 //        document.getElementById("registerbtn").disable = false
     }
+    function checkPhoneNumber() {
+        let number = document.getElementById("phone-number").value
+        let reg = /^[0-9]+$/
+        if (!reg.test(number)){
+            document.getElementById("pnmsg").innerText = "only number"
+            return false
+        }else {
+            document.getElementById("pnmsg").innerText = ""
+            return true
+        }
+    }
     function doSubmit() {
-        if (checkName()&&checkPassword()){
+        if (checkName()&&checkPassword()&&checkPhoneNumber()){
             document.getElementById("form").submit();
         }else {
             alert("check your information,please!")
@@ -63,23 +74,30 @@
 <form id="form" style="text-align: center" action="Register" method="post">
     <table align="center" border="0">
         <tr>
-            <td>账号：</td>
+            <td><label style="color: red">*</label>账号：</td>
             <td>
                 <input type="text" name="username" id="username" value="<%=message.getUserName()%>" onblur="checkName()">
                 <label id="namemsg" style="color: red"></label>
             </td>
         </tr>
         <tr>
-            <td>密码：</td>
+            <td><label style="color: red">*</label>密码：</td>
             <td>
                 <input type="password" name="password" id="password">
             </td>
         </tr>
         <tr>
-            <td>确认密码：</td>
+            <td><label style="color: red">*</label>确认密码：</td>
             <td>
                 <input type="password" name="confirmPassword" id="confirmPassword" onblur="checkPassword()">
                 <label id="mmsg" style="color: red;"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>telephone:</td>
+            <td>
+                <input type="text" name="phone-number" id="phone-number" onblur="checkPhoneNumber()">
+                <label id="pnmsg" style="color: red;"></label>
             </td>
         </tr>
     </table>
