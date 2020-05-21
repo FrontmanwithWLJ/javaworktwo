@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/UpdateInfo")
 public class UpdateInfoServlet extends HttpServlet {
@@ -31,16 +32,18 @@ public class UpdateInfoServlet extends HttpServlet {
         UserService userService = new UserService();
         SqlResponse response = userService.update(id,username,password,newPassword);
         userService.close();
+        resp.setContentType("text/html;charset=utf-8");
+        PrintWriter out = resp.getWriter();
         if (response.isSuccess()){
             if (response.isNotFound()){
-                message.setNewMessage("用户不存在");
+                message.setNewMessage("incorrect password!!!");
                 resp.sendRedirect("user/user_info.jsp");
                 return;
             }
             message.setUserName(username);
-            message.setNewMessage("修改成功，请重新登录");
             message.setID(id);
-            resp.sendRedirect("user/login.jsp");
+            out.println("Success!!! After three seconds will jump to login,or <a href='user/login.jsp'>Click here!</a> ");
+            resp.setHeader("refresh","3,user/login.jsp");
         }else {
             message.setNewMessage("出现错误："+response.getMsg());
             resp.sendRedirect("user/user_info.jsp");

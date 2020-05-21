@@ -7,7 +7,7 @@
     if (message == null) {
         message = new Message();
         String msg = request.getParameter("msg");
-        if (msg == null)msg = "welcome to join us!";
+        if (msg == null)msg = "welcome!";
         message.setNewMessage(msg);
     }
 %>

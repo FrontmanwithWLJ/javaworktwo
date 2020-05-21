@@ -40,7 +40,6 @@ public class LoginServlet extends HttpServlet {
             }else {
                 message.setID(bean.getID());
                 message.setUserName(bean.getUserName());
-                message.setNewMessage("登录成功");
                 message.setPhoneNumber(bean.getPhoneNumber());
                 req.getSession().setAttribute("msg",message);
                 resp.sendRedirect("index.jsp");

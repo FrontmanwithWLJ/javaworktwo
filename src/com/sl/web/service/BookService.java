@@ -15,12 +15,21 @@ public class BookService {
 
     public SearchResult<BookBean> search(int userid, String bookname,String type, int page, int count) {
         int i = userDao.verify(userid);
-        userDao.close();
         if (i != 1) return null;
         return bookDao.search(bookname,type,page,count);
     }
 
-    public SqlResponse delete(int userid, String bookname) {
+    public SqlResponse add(int userid,BookBean bean){
+        int i = userDao.verify(userid);
+        if (i != 1)return null;
+        int count = bookDao.insert(bean);
+        return SqlResponse.buildResponse(count,2);
+    }
+
+    public SqlResponse delete(int userid, int bookid) {
+        int i = userDao.verify(userid);
+        if (i != 1)return null;
+        //int count = bookDao.delete(bookname);
         return null;
     }
 

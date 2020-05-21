@@ -1,13 +1,8 @@
-<%@ page import="com.sl.web.bean.Message" %><%--
-  Created by IntelliJ IDEA.
-  User: frontman
-  Date: 2020/5/12
-  Time: 9:24 上午
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.sl.web.bean.Message" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Message message = (Message) session.getAttribute("msg");
+    if (message == null)message = new Message();
 %>
 <html>
 <head>
@@ -91,6 +86,9 @@
         <button id="btn" type="button" style="color:#BC8F8F" onclick="doSubmit()">修改密码</button>
     </form>
 <br>
+    <div align="center">
+        <%=message.getNewMessage()%>
+    </div>
 <br>
 </body>
 </html>

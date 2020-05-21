@@ -26,25 +26,50 @@ public class SearchServlet extends HttpServlet {
             return;
         }
         HttpSession session = req.getSession();
-        String page = (String) session.getAttribute("currentPage");
-        if (page==null||"".equals(page)){
+        Integer page = (Integer) session.getAttribute("currentPage");
+        if (page==null){
             resp.setHeader("refresh","1;user/login.jsp");
             return;
         }
-        int pageTmp = Integer.parseInt(page);
         if (direction.equals("up")){
-            session.setAttribute("currentPage",pageTmp+1);
+            session.setAttribute("currentPage",page-1);
         }else if (direction.equals("down")){
-            session.setAttribute("currentPage",pageTmp-1);
+            session.setAttribute("currentPage",page+1);
         }
         doPost(req,resp);
     }
 
+    //too long
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String text = new String(req.getParameter("search-text").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        String type = req.getParameter("search-type");
         HttpSession session = req.getSession();
+        String tmp = req.getParameter("search-text");
+        if (tmp == null)tmp = (String) session.getAttribute("searchText");
+        if (tmp==null){
+            resp.setHeader("refresh","1;index.jsp");
+            return;
+        }
+        String text = new String(tmp.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+
+        String type = req.getParameter("search-type");
+        if (type == null) {
+            Integer i = (Integer) session.getAttribute("selectIndex");
+            if (i==null){
+                resp.setHeader("refresh","1;index.jsp");
+                return;
+            }
+            switch (i){
+                case 1:
+                    type = "authorname";
+                    break;
+                case 2:
+                    type = "bookid";
+                    break;
+                default:
+                    type="bookname";
+            }
+        }
+
         Message message = (Message) session.getAttribute("msg");
         if (message == null) {
             message = new Message();
@@ -76,9 +101,8 @@ public class SearchServlet extends HttpServlet {
             //req.getRequestDispatcher("login.jsp").forward(req,resp);
         }
         Integer pageTmp = (Integer) session.getAttribute("currentPage");
-        Integer countTmp = (Integer) session.getAttribute("count");
         int page = (pageTmp==null)?0:pageTmp;
-        int count = (countTmp==null)?20:countTmp;
+        int count = 20;
 
         UserService userService = new UserService();
         SqlResponse response = userService.verifyId(id);
@@ -91,8 +115,7 @@ public class SearchServlet extends HttpServlet {
                 if (result != null) {
                     session.setAttribute("search-result",result.getList());
                     session.setAttribute("totalPages",result.getTotalPage());
-                    session.setAttribute("currentPage",page+1);
-                    session.setAttribute("count",count);
+                    session.setAttribute("currentPage",result.getPage());
                     message.setNewMessage("search over.");
                 } else {
                     message.setNewMessage("can't finish this work,maybe server sql has no working");

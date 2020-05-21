@@ -22,7 +22,9 @@ public class Message extends BaseBean {
     }
 
     public String getNewMessage() {
-        return newMessage;
+        String tmp = newMessage;
+        newMessage = "";
+        return tmp;
     }
 
     public void setNewMessage(String newMessage) {

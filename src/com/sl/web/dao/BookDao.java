@@ -65,17 +65,19 @@ public class BookDao extends BaseDao<BookBean> {
                 resultSet.last();
                 int total = resultSet.getRow();
                 resultSet.first();
+                if (page<0)page=0;
                 int current = count * page;
+                int countTmp = count;
                 if (current >= total) {//over flow ,get the last page
                     page = (total / count);
                     current = count * page;
-                    count = total % count;
+                    countTmp = total % count;
                 }
                 resultSet.absolute(current);
                 SearchResult<BookBean> result = new SearchResult<>();
-                result.setCount(count);
+                result.setCount(countTmp);
                 result.setPage(page);
-                result.setTotalPage(total);
+                result.setTotalPage((total/count) +1);
                 ArrayList<BookBean> list = new ArrayList<>();
                 result.setList(list);
                 while (resultSet.next()) {
@@ -87,7 +89,7 @@ public class BookDao extends BaseDao<BookBean> {
                             resultSet.getFloat(5),
                             resultSet.getDate(6)
                     ));
-                    if (--count == 0) {
+                    if (--countTmp == 0) {
                         break;
                     }
                 }
@@ -118,8 +120,7 @@ public class BookDao extends BaseDao<BookBean> {
         try {
             count = statement.executeUpdate(
                     "delete from bookinfo where bookid="
-                            + bookBean.getID() + " and "
-                            + "bookname='" + bookBean.getBookName() + "'");
+                            + bookBean.getID());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             count = SQLERROR;

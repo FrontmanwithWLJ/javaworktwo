@@ -12,8 +12,14 @@
 
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
-        <url-pattern>/user_info.jsp</url-pattern>
+        <url-pattern>/user/user_info.jsp</url-pattern>
     </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/book/add_book.jsp</url-pattern>
+    </filter-mapping>
+
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

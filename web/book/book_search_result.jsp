@@ -25,9 +25,12 @@
                         .append("</td>  <td>")
                         .append(bean.getPrice())
                         .append("</td>  <td>")
-                        .append(bean.getDate())
-                        .append("</td> <tr> </table>");
+                        .append(bean.getDate());
+                if (isDel)
+                    strTmp.append("</td> <td> <a onclick='del(this)'>delete</a>");
+                strTmp.append("</td> </tr>");
             });
+            strTmp.append("</table>");
         }
     }
     int totalPages = 0;
@@ -38,28 +41,28 @@
     if (o2 != null) currentPage = (Integer) o2;
 %>
 <html>
+<script>
+    document.getElementById()
+</script>
 <body>
 <%=strTmp.toString()%>
-
 <br>
 <div style="width: 300px;visibility: <%=hiddenPageLabel%>">
-    <br>
-    <br>
-    <br>
-    <br>
-    <label>total pages: <%=totalPages%> current page: <%=currentPage%></label>
+    <label>total: <%=totalPages%> <br> current: <%=currentPage + 1%>
+    </label>
     <div align="center">
-        <form style="height: 27px;" action="${pageContext.request.contextPath}/Search" method="get">
+        <form style="height: 27px;float: right;width: 50%" action="${pageContext.request.contextPath}/Search"
+              method="get">
             <input name="direction" value="down" style="visibility: hidden">
-            <button type="submit">down</button>
+            <button type="submit" style="width: 100%;">down</button>
         </form>
-        <form style="height: 27px;" action="${pageContext.request.contextPath}/Search" method="get">
+        <form style="height: 27px;float: left;width: 50%" action="${pageContext.request.contextPath}/Search"
+              method="get">
             <input name="direction" value="up" style="visibility: hidden">
-            <button type="submit">up</button>
+            <button type="submit" style="width: 100%">up</button>
         </form>
     </div>
 </div>
-
 
 
 </body>

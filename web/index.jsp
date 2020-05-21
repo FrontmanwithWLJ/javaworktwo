@@ -14,7 +14,7 @@
         //session.setAttribute("msg",message);
         msg = "<a href=\"user/login.jsp\"><img src='pic/person.png' width='25' height='24' style='margin-bottom: -5px'>登录</a>\uD83C\uDF32<a href=\"user/register.jsp\">注册</a>\n";
     }else {
-        msg = "<a href=''>录入图书</a> <a href=''>删除图书</a> <a href=\"user/user_info.jsp\"><img src='pic/person.png' width='25' height='24' style='margin-bottom: -5px'>"+message.getUserName()+"</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
+        msg = "<a href='book/add_book.jsp'>录入图书</a> <a href='book/del_book.jsp'>删除图书</a> <a href=\"user/user_info.jsp\"><img src='pic/person.png' width='25' height='24' style='margin-bottom: -5px'>"+message.getUserName()+"</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
     }
 %>
 <html>
