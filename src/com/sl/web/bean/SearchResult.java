@@ -9,6 +9,7 @@ public class SearchResult<T> {
     private int page;
     //每每页的数量
     private int count;
+    private int totalPage;
     //最后要吧结果全部列出来，不需要随机访问
     private ArrayList<T> list;
 
@@ -46,5 +47,13 @@ public class SearchResult<T> {
 
     public void setList(ArrayList<T> list) {
         this.list = list;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
     }
 }

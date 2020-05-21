@@ -13,11 +13,11 @@ public class BookService {
     public BookService() {
     }
 
-    public SearchResult<BookBean> search(int userid, String bookname, int page, int count) {
+    public SearchResult<BookBean> search(int userid, String bookname,String type, int page, int count) {
         int i = userDao.verify(userid);
         userDao.close();
         if (i != 1) return null;
-        return bookDao.search(bookname,page,count);
+        return bookDao.search(bookname,type,page,count);
     }
 
     public SqlResponse delete(int userid, String bookname) {

@@ -68,9 +68,10 @@ public abstract class BaseDao<T> {
      * 分页查询
      *
      * @param key 查询关键字 如果key为空，则查询所有数据
+     * @param type
      * @return 返回查询结果
      */
-    SearchResult<T> search(String key, int page, int count) {
+    SearchResult<T> search(String key, String type, int page, int count) {
         return null;
     }
 

@@ -102,7 +102,7 @@ public class UserDao extends BaseDao<UserBean> {
     }
     //感觉这两个方法暂时没有必要实现
     @Override
-    public SearchResult<UserBean> search(String key, int page, int count) {
+    public SearchResult<UserBean> search(String key, String type, int page, int count) {
         return null;
     }
     @Override

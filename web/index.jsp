@@ -4,6 +4,9 @@
 <%
     String searchText = (String)session.getAttribute("searchText");
     if (searchText == null)searchText = "";
+    Integer selectIndexTmp = (Integer)session.getAttribute("selectIndex");
+    if (selectIndexTmp == null)selectIndexTmp=0;
+    int selectIndex = selectIndexTmp;
     Message message = (Message) session.getAttribute("msg");
     //存在message则说明用户已登录
     if (message == null){
@@ -23,7 +26,6 @@
             width: 50%;
             height: 40px;
             margin-top: 0;
-            margin-left: 25%;
             border-radius: 20px;
             border: 1px solid gray;
             padding: 10px;
@@ -55,12 +57,19 @@
 <div style="text-align: right;margin-right: 10px">
     <%=msg%>
 </div>
-<form id="search-form" method="post" action="Search">
+<form id="search-form" style="align-content: center" method="post" action="Search">
     <input name="id" style="visibility: hidden" value="<%=message.getID()%>">
     <br>
+    <select name="search-type" id="search-type" style="margin-left: 23%">
+        <option value="bookname">书名</option>
+        <option value="authorname">作者</option>
+        <option value="bookid">ID</option>
+    </select>
+    <script>
+        document.getElementById("search-type")[<%=selectIndex%>].selected = true
+    </script>
     <input placeholder="搜索书名/作者" name="search-text" id="search-box" class="search-box" type="text" value="<%=searchText%>" id="search-box" onkeypress="keyPress(event)">
-    <input name="page" value="1" style="visibility: hidden"/>
-    <input name="count" value="20" style="visibility: hidden"/>
+
 </form>
 <br>
 <div align="center">

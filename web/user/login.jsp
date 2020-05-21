@@ -6,7 +6,9 @@
     Message message = (Message) request.getAttribute("msg");
     if (message == null) {
         message = new Message();
-        message.setNewMessage("欢迎您的到来!");
+        String msg = request.getParameter("msg");
+        if (msg == null)msg = "welcome to join us!";
+        message.setNewMessage(msg);
     }
 %>
 <head>
@@ -56,14 +58,14 @@
             <td>
                 <input type="text" name="username" id="username" value="<%=message.getUserName()%>"
                        onblur="checkName()">
-                <label id="username-msg"></label>
+                <label id="username-msg" style="color: red"></label>
             </td>
         </tr>
         <tr>
             <td>密码：</td>
             <td>
                 <input type="password" name="password" id="password" onblur="checkPassword()">
-                <label id="password-msg"></label>
+                <label id="password-msg" style="color: red;"></label>
             </td>
         </tr>
     </table>

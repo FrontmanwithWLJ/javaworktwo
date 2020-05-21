@@ -30,12 +30,13 @@ public class LoginServlet extends HttpServlet {
         userService.close();
         //将要保存在会话中的消息
         Message message = new Message();
+
         //命令执行成功
         if (response.isSuccess()) {
             if (response.isNotFound()){
-                message.setUserName(bean.getUserName());
-                message.setNewMessage("用户不存在");
-                resp.sendRedirect("user/login.jsp");
+                //message.setUserName(bean.getUserName());
+                //message.setNewMessage("用户不存在");
+                resp.sendRedirect("user/login.jsp?msg=Not found user or incorrect password!");
             }else {
                 message.setID(bean.getID());
                 message.setUserName(bean.getUserName());
@@ -45,8 +46,9 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect("index.jsp");
             }
         }else{//执行失败
-            resp.setHeader("refresh","3;user/login.jsp");
-            resp.getWriter().write("登录失败,疑似服务器故障,两秒后跳转至登录页面,或者<a href='user/login.jsp'>点我直接跳转</a>");
+            resp.sendRedirect("user/login.jsp?msg=The server is not work! contact admin,please!");
+            //resp.setHeader("refresh","3;user/login.jsp");
+            //resp.getWriter().write("登录失败,疑似服务器故障,两秒后跳转至登录页面,或者<a href='user/login.jsp'>点我直接跳转</a>");
         }
     }
 }

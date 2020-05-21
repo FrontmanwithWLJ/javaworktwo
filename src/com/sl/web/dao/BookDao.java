@@ -4,7 +4,6 @@ import com.sl.web.bean.BookBean;
 import com.sl.web.bean.SearchResult;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -38,12 +37,13 @@ public class BookDao extends BaseDao<BookBean> {
 
     /**
      * @param key   查询关键字 如果key为空，则查询所有数据 space will will split str to search
+     * @param type
      * @param page  has the number of count ; in the page
      * @param count
      * @return
      */
     @Override
-    public SearchResult<BookBean> search(String key, int page, int count) {
+    public SearchResult<BookBean> search(String key, String type, int page, int count) {
         StringBuilder sql = new StringBuilder();
         sql.append("select * from bookinfo ");
         //key is not null or empty
@@ -51,7 +51,10 @@ public class BookDao extends BaseDao<BookBean> {
             String[] keys = key.split(" ");//space split
             sql.append("where ");
             for (int i = 0; i < keys.length; i++) {
-                sql.append("bookname like '%").append(keys[i]).append("%'");
+                if ("bookid".equals(type)) {
+                    sql.append(type).append(" = ").append(keys[i]);
+                } else
+                    sql.append(type).append(" like '%").append(keys[i]).append("%'");
                 if (i != keys.length - 1) {
                     sql.append(" or ");
                 }
@@ -65,16 +68,17 @@ public class BookDao extends BaseDao<BookBean> {
                 int current = count * page;
                 if (current >= total) {//over flow ,get the last page
                     page = (total / count);
-                    current = count*page;
+                    current = count * page;
                     count = total % count;
                 }
                 resultSet.absolute(current);
                 SearchResult<BookBean> result = new SearchResult<>();
                 result.setCount(count);
                 result.setPage(page);
+                result.setTotalPage(total);
                 ArrayList<BookBean> list = new ArrayList<>();
                 result.setList(list);
-                while (resultSet.next()){
+                while (resultSet.next()) {
                     list.add(new BookBean(
                             resultSet.getInt(1),
                             resultSet.getString(2),
@@ -83,7 +87,7 @@ public class BookDao extends BaseDao<BookBean> {
                             resultSet.getFloat(5),
                             resultSet.getDate(6)
                     ));
-                    if (--count == 0){
+                    if (--count == 0) {
                         break;
                     }
                 }
@@ -110,7 +114,7 @@ public class BookDao extends BaseDao<BookBean> {
     @Override
     public int delete(BookBean bookBean) {
         int count = SQLNOCONNECTED;
-        if (statement==null)return count;
+        if (statement == null) return count;
         try {
             count = statement.executeUpdate(
                     "delete from bookinfo where bookid="
