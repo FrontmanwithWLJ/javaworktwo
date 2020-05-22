@@ -23,7 +23,7 @@
     <title>我的图书管理系统</title>
     <style type="text/css">
         .search-box{
-            width: 50%;
+            width: 48%;
             height: 40px;
             margin-top: 0;
             border-radius: 20px;
@@ -69,11 +69,11 @@
         document.getElementById("search-type")[<%=selectIndex%>].selected = true
     </script>
     <input placeholder="搜索书名/作者" name="search-text" id="search-box" class="search-box" type="text" value="<%=searchText%>" id="search-box" onkeypress="keyPress(event)">
-
+    <button onclick="search()">Search</button>
 </form>
 <br>
 <div align="center">
-    <jsp:include page="book/book_search_result.jsp"></jsp:include>
+    <jsp:include page="book/book_search_result.jsp"/>
 <%--    <%=message.getNewMessage()%>--%>
 </div>
 </body>

@@ -6,6 +6,8 @@ import com.sl.web.dao.BookDao;
 import com.sl.web.dao.UserDao;
 import com.sl.web.response.SqlResponse;
 
+import java.awt.print.Book;
+
 public class BookService {
     private BookDao bookDao = new BookDao();
     private UserDao userDao = new UserDao();
@@ -29,8 +31,10 @@ public class BookService {
     public SqlResponse delete(int userid, int bookid) {
         int i = userDao.verify(userid);
         if (i != 1)return null;
-        //int count = bookDao.delete(bookname);
-        return null;
+        BookBean bookBean = new BookBean();
+        bookBean.setID(bookid);
+        int count = bookDao.delete(bookBean);
+        return SqlResponse.buildResponse(count,1);
     }
 
     public void close() {
