@@ -21,8 +21,8 @@ public class BookDao extends BaseDao<BookBean> {
                             + bookBean.getBookName() + "','"
                             + bookBean.getAuthorName() + "','"
                             + bookBean.getPublisherName() + "','"
-                            + bookBean.getPrice() + "',"
-                            + bookBean.getDate() + ");");
+                            + bookBean.getPrice() + "','"
+                            + bookBean.getDate() + "');");
         } catch (SQLException t) {
             t.printStackTrace();
             count = SQLERROR;

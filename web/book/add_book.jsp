@@ -4,7 +4,7 @@
     Message message = (Message) session.getAttribute("msg");
     String msg = "";
     if (message != null)
-        msg = "<a href='../index.jsp'>首页</a> <a href='del_book.jsp'>删除图书</a> <a href=\"user/user_info.jsp\"><img src='../pic/person.png' width='25' height='24' style='margin-bottom: -5px'>"+message.getUserName()+"</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
+        msg = "<a href='../index.jsp'>首页</a> <a href='del_book.jsp?clear=0'>删除图书</a> <a href=\"user/user_info.jsp\"><img src='../pic/person.png' width='25' height='24' style='margin-bottom: -5px'>"+message.getUserName()+"</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
     else message = new Message();
 %>
 <html>

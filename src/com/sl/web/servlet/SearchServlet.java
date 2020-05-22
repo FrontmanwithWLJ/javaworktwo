@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 
 @WebServlet("/Search")
 public class SearchServlet extends HttpServlet {
+    private boolean isDelete = false;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String direction = req.getParameter("direction");
@@ -36,17 +37,22 @@ public class SearchServlet extends HttpServlet {
         }else if (direction.equals("down")){
             session.setAttribute("currentPage",page+1);
         }
+        isDelete = true;
         doPost(req,resp);
     }
 
     //too long
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Object deleteTmp = req.getParameter("delete");
+        if (deleteTmp != null)isDelete=true;
+        String url = isDelete?"book/del_book.jsp":"index.jsp";
+        isDelete = false;
         HttpSession session = req.getSession();
         String tmp = req.getParameter("search-text");
         if (tmp == null)tmp = (String) session.getAttribute("searchText");
         if (tmp==null){
-            resp.setHeader("refresh","1;index.jsp");
+            resp.setHeader("refresh","0;"+url);
             return;
         }
         String text = new String(tmp.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
@@ -55,7 +61,7 @@ public class SearchServlet extends HttpServlet {
         if (type == null) {
             Integer i = (Integer) session.getAttribute("selectIndex");
             if (i==null){
-                resp.setHeader("refresh","1;index.jsp");
+                resp.setHeader("refresh","0;"+url);
                 return;
             }
             switch (i){
@@ -87,10 +93,9 @@ public class SearchServlet extends HttpServlet {
                 break;
             default:
                 message.setNewMessage("查询失败：参数错误");
-                resp.sendRedirect("index.jsp");
+                resp.sendRedirect(url);
         }
         session.setAttribute("searchText", text);
-
         int id = message.getID();
         //未登录状态
         if (id == -1) {
@@ -120,14 +125,14 @@ public class SearchServlet extends HttpServlet {
                 } else {
                     message.setNewMessage("can't finish this work,maybe server sql has no working");
                 }
-                resp.sendRedirect("index.jsp");
+                resp.setHeader("refresh","0;"+url);
             } else {
                 message.setNewMessage("登录信息错误,请重新登录");
                 resp.sendRedirect("user/login.jsp");
             }
         } else {
             message.setNewMessage("查询失败：" + response.getMsg());
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect(url);
         }
     }
 }

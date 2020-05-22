@@ -1,6 +1,10 @@
 <%@ page import="com.sl.web.bean.Message" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    String clear = request.getParameter("clear");
+    if (clear!=null){
+        session.setAttribute("search-result",null);
+    }
     String searchText = (String) session.getAttribute("searchText");
     if (searchText == null) searchText = "";
     Integer selectIndexTmp = (Integer) session.getAttribute("selectIndex");
@@ -27,6 +31,17 @@
         }
     </style>
     <script>
+        function keyPress(event) {
+            //按下回车键
+            if (event.keyCode === 13 && document.getElementById("search-box").value !== ""){
+                search()
+            }
+        }
+        function search() {
+            let text = document.getElementById("search-box").value
+            if (text.match(/^[ ]+$/))return//all space
+            document.getElementById("search-form").submit()
+        }
     </script>
 </head>
 <body>
@@ -36,7 +51,7 @@
 <br>
 <h1 align="center">Delete Book</h1>
 
-<form id="search-form" style="align-content: center" method="post" action="Search">
+<form id="search-form" style="align-content: center" method="post" action="../Search">
     <input name="id" style="visibility: hidden" value="<%=message.getID()%>">
     <br>
     <select name="search-type" id="search-type" style="margin-left: 23%">
@@ -49,6 +64,8 @@
     </script>
     <input placeholder="搜索书名/作者" name="search-text" id="search-box" class="search-box" type="text"
            value="<%=searchText%>" id="search-box" onkeypress="keyPress(event)">
+    <button onclick="search()">Search</button>
+    <input name="delete" value="1" style="visibility: hidden">
 </form>
 
 <div align="center">

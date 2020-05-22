@@ -44,12 +44,12 @@ public class DeleteBookServlet extends HttpServlet {
                 for (int i=0;i<list.size();i++){
                     if (list.get(i).getID() == bookid){
                         list.remove(i);
-                        resp.setHeader("refresh","0;book/del_book.jsp");
+                        resp.setHeader("refresh","0;book/del_book.jsp?del=0");
                         return;
                     }
                 }
                 out.println("Not found this book,not delete book;After three seconds turn back or <a href='book/del_book.jsp'>click here!</a>");
-                resp.setHeader("refresh","3;book/del_book.jsp");
+                resp.setHeader("refresh","3;book/del_book.jsp?del=0");
             }
         }
         out.println("Do you login? After three seconds turn to login or <a href='user/login.jsp'>click here!</a>");

@@ -57,12 +57,12 @@
     <label>total: <%=totalPages%>  current: <%=currentPage + 1%>
     </label>
     <div align="center">
-        <form style="height: 27px;float: right;width: 50%" action="${pageContext.request.contextPath}/Search"
+        <form style="height: 27px;float: right;width: 50%" action="${pageContext.request.contextPath}/Search<%= isDel?"?del=0":""%>"
               method="get">
             <input name="direction" value="down" style="visibility: hidden">
             <button type="submit" style="width: 100%;">down</button>
         </form>
-        <form style="height: 27px;float: left;width: 50%" action="${pageContext.request.contextPath}/Search"
+        <form style="height: 27px;float: left;width: 50%" action="${pageContext.request.contextPath}/Search<%= isDel?"?del=0":""%>"
               method="get">
             <input name="direction" value="up" style="visibility: hidden">
             <button type="submit" style="width: 100%">up</button>
