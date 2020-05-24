@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * 处理注册请求
+ */
 @WebServlet("/Register")
 public class RegisterServlet extends HttpServlet {
     @Override
@@ -20,8 +23,11 @@ public class RegisterServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String phoneNumber = req.getParameter("phone-number");
+
         UserService userService = new UserService();
         SqlResponse response = userService.register(username,password,phoneNumber);
+        //由最上层决定关闭连接的时机
+        userService.close();
         //获取会话，传递信息
         HttpSession session = req.getSession();
         Message message = (Message) session.getAttribute("msg");

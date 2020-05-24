@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * 更新用户信息
+ */
 @WebServlet("/UpdateInfo")
 public class UpdateInfoServlet extends HttpServlet {
     @Override

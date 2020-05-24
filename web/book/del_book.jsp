@@ -1,9 +1,11 @@
 <%@ page import="com.sl.web.bean.Message" %>
+<%@ page import="com.sl.web.utils.StringUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String clear = request.getParameter("clear");
     if (clear!=null){
         session.setAttribute("search-result",null);
+        session.setAttribute("currentPage",0);
     }
     String searchText = (String) session.getAttribute("searchText");
     if (searchText == null) searchText = "";
@@ -13,7 +15,7 @@
     Message message = (Message) session.getAttribute("msg");
     String msg = "";
     if (message != null)
-        msg = "<a href='../index.jsp'>首页</a> <a href='add_book.jsp'>录入图书</a> <a href=\"user/user_info.jsp\"><img src='../pic/person.png' width='25' height='24' style='margin-bottom: -5px'>" + message.getUserName() + "</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
+        msg = "<a href='../index.jsp'>首页</a> <a href='add_book.jsp'>录入图书</a> <a href=\"../user/user_info.jsp\"><img src='../pic/person.png' width='25' height='24' style='margin-bottom: -5px'>" + message.getUserName() + "</a>\uD83C\uDF32<a href=\"javascript:void(0);\" onclick=\"quitLogin()\">退出</a>";
     else message = new Message();
 %>
 <html>
@@ -31,6 +33,12 @@
         }
     </style>
     <script>
+        function quitLogin() {
+//写了个空表提交,用来删除session里面的信息
+            document.getElementById("form").submit()
+// history.go(0)
+// window.location = "login.jsp"
+        }
         function keyPress(event) {
             //按下回车键
             if (event.keyCode === 13 && document.getElementById("search-box").value !== ""){
@@ -69,11 +77,13 @@
 </form>
 
 <div align="center">
-    <jsp:include page="book_search_result.jsp">
+    <jsp:include page="del_book_search_result.jsp">
         <jsp:param name="del" value="1"/>
     </jsp:include>
 </div>
 
+
+<form id="form" action="${pageContext.request.contextPath}/Logout" method="get"></form>
 <br>
 <br>
 <br>

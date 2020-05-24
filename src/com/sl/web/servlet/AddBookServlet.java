@@ -4,6 +4,7 @@ import com.sl.web.bean.BookBean;
 import com.sl.web.bean.Message;
 import com.sl.web.response.SqlResponse;
 import com.sl.web.service.BookService;
+import com.sl.web.utils.StringUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 
+/**
+ * 增加书籍
+ */
 @WebServlet("/AddBook")
 public class AddBookServlet extends HttpServlet {
     @Override
@@ -25,9 +29,9 @@ public class AddBookServlet extends HttpServlet {
         BookBean bookBean = new BookBean();
         try {
             id = Integer.parseInt(req.getParameter("userid"));
-            bookBean.setBookName(req.getParameter("bookname"));
-            bookBean.setAuthorName(req.getParameter("authorname"));
-            bookBean.setPublisherName(req.getParameter("publishername"));
+            bookBean.setBookName(StringUtil.toUTF_8(req.getParameter("bookname")));
+            bookBean.setAuthorName( StringUtil.toUTF_8(req.getParameter("authorname")));
+            bookBean.setPublisherName(StringUtil.toUTF_8(req.getParameter("publishername")));
             bookBean.setPrice(Float.parseFloat(req.getParameter("price")));
             bookBean.setDate(Date.valueOf(req.getParameter("date")));
         }catch (NullPointerException e){

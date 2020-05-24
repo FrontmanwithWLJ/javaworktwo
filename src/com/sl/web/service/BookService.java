@@ -8,6 +8,9 @@ import com.sl.web.response.SqlResponse;
 
 import java.awt.print.Book;
 
+/**
+ * @param userid 用户唯一识别码，查询操作前先确认用户的真实性
+ */
 public class BookService {
     private BookDao bookDao = new BookDao();
     private UserDao userDao = new UserDao();

@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+/**
+ * 删除图书
+ */
 @WebServlet("/DeleteBook")
 public class DeleteBookServlet extends HttpServlet {
     @Override
@@ -33,12 +36,13 @@ public class DeleteBookServlet extends HttpServlet {
             return;
         }
         bookid = Integer.parseInt(bookidtmp);
-        Message message = (Message)o;
+        Message message = (Message)o;//登录信息保存在会话里，获取用户的识别码，验证通过才执行删除
         BookService bookService = new BookService();
         SqlResponse response = bookService.delete(message.getID(),bookid);
+        bookService.close();
         if (response.isSuccess()&&!response.isNotFound()){
+            //搜索结果保存在会话里的，
             Object tmp = session.getAttribute("search-result");
-
             if (tmp != null){
                 ArrayList<BookBean> list = (ArrayList<BookBean>) tmp;
                 for (int i=0;i<list.size();i++){

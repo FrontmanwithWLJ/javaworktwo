@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 处理登录请求
+ */
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
     @Override

@@ -21,6 +21,9 @@ public class Message extends BaseBean {
         this.userName = userName;
     }
 
+    /**
+     * 消息被读取之后就会清空
+     */
     public String getNewMessage() {
         String tmp = newMessage;
         newMessage = "";
